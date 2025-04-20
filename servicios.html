@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Servicios | ConIngenio</title>
+<link href="css/styles.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/></head>
+<body class="page-servicios"><header>
+<div class="container">
+<img alt="Logo" class="logo-img" src="assets/logo.png"/>
+<nav>
+<ul>
+<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+<li><a href="servicios.html"><i class="fa fa-cog"></i> Servicios</a></li>
+<li><a href="nosotros.html"><i class="fa fa-user"></i> Nosotros</a></li>
+<li><a href="contacto.html"><i class="fa fa-envelope"></i> Contacto</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<div class="wrapper">
+<main class="container">
+<h1 class="section-title">Nuestros Servicios</h1>
+<p class="section-subtitle">Descubre cómo nuestras soluciones digitales pueden ayudarte a crecer.</p>
+<div class="info-grid" id="services">
+<!-- Los servicios se cargarán dinámicamente aquí -->
+</div>
+</main>
+<footer>
+<p>© 2025 ConIngenio. Todos los derechos reservados.</p>
+<p>Av. Providencia 1234, Oficina 601 - Santiago, Chile | info@coningenio.cl</p>
+</footer>
+</div>
+<script>
+    fetch("https://cors-anywhere.herokuapp.com/https://ciisa.coningenio.cl/v1/services/", {
+      headers: {
+        "Authorization": "Bearer ciisa"
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('services');
+      container.innerHTML = data.data.map(service => `
+        <div class="card">
+          <i class="fas fa-cogs fa-2x" style="color:#43a047;"></i>
+          <h3>${service.titulo.esp}</h3>
+          <p>${service.descripcion.esp}</p>
+        </div>
+      `).join('');
+    })
+    .catch(() => {
+      document.getElementById('services').innerHTML = '<p>Error cargando los servicios.</p>';
+    });
+  </script>
+</body>
+</html>
